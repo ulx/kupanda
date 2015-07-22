@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Toast;
 
 import com.rusin.kupandatest.KuApp;
 import com.rusin.kupandatest.R;
 import com.rusin.kupandatest.model.ItemsModel;
 import com.rusin.kupandatest.net.object.ItemsResponse;
 import com.rusin.kupandatest.view.adapter.RecyclerAdapter;
+import com.rusin.kupandatest.view.adapter.RecyclerItemClickListener;
 
 import java.util.ArrayList;
 
@@ -30,6 +33,16 @@ public class FirstActivity extends BaseActivity{
 
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+
+                        Toast.makeText(getBaseContext(), position + "", Toast.LENGTH_SHORT).show();
+                    }
+                })
+        );
+
         if (KuApp.getManagerModel().getItemsModel().getItem().isEmpty()) {
             KuApp.getManagerModel().getItemsModel().loadItems(new LoadListner());
         } else {
@@ -41,6 +54,7 @@ public class FirstActivity extends BaseActivity{
     private void loadData() {
         mAdapter = new RecyclerAdapter(KuApp.getManagerModel().getItemsModel().getItem());
         mRecyclerView.setAdapter(mAdapter);
+
     }
 
 

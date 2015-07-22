@@ -50,11 +50,10 @@ public class RecyclerAdapter extends  RecyclerView.Adapter<RecyclerAdapter.ViewH
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.mTextView.setText(mDataset.get(position).title_75);
+        holder.mTextView.setText(mDataset.get(position).origin_price.amount + "");
 
         Glide.with(holder.mImageView.getContext()).load(mDataset.get(position).image_item)
                 .fitCenter()
-
                 .into(holder.mImageView);
 
     }
@@ -63,5 +62,7 @@ public class RecyclerAdapter extends  RecyclerView.Adapter<RecyclerAdapter.ViewH
     public int getItemCount() {
         return mDataset.size();
     }
+
+
 
 }
