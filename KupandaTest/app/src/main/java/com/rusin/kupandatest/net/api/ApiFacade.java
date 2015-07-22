@@ -50,7 +50,7 @@ public class ApiFacade {
         return new RestAdapter.Builder()
                 .setClient(getClient(timeout))
                 .setEndpoint(endpointUrl)
-                .setLogLevel(RestAdapter.LogLevel.BASIC)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setLog(new AndroidLog(TAG))
                 .build()
                 .create(IApi.class);
