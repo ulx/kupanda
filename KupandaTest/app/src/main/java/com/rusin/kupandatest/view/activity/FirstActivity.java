@@ -1,8 +1,8 @@
 package com.rusin.kupandatest.view.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -38,12 +38,14 @@ public class FirstActivity extends BaseActivity{
                     @Override
                     public void onItemClick(View view, int position) {
 
-                        Toast.makeText(getBaseContext(), position + "", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), SecondActivity.class);
+                        intent.putExtra(SecondActivity.POSITION, position);
+                        startActivity(intent);
                     }
                 })
         );
 
-        if (KuApp.getManagerModel().getItemsModel().getItem().isEmpty()) {
+        if (KuApp.getManagerModel().getItemsModel().getItems().isEmpty()) {
             KuApp.getManagerModel().getItemsModel().loadItems(new LoadListner());
         } else {
             loadData();
@@ -52,7 +54,7 @@ public class FirstActivity extends BaseActivity{
     }
 
     private void loadData() {
-        mAdapter = new RecyclerAdapter(KuApp.getManagerModel().getItemsModel().getItem());
+        mAdapter = new RecyclerAdapter(KuApp.getManagerModel().getItemsModel().getItems());
         mRecyclerView.setAdapter(mAdapter);
 
     }

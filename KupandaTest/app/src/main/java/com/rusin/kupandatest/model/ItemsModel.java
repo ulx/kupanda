@@ -12,7 +12,7 @@ import retrofit.client.Response;
 
 public class ItemsModel {
 
-    private static final String  apiKey = "ca3e173c79f471cc04d53ce6b349d9cf";
+    private static final String apiKey = "ca3e173c79f471cc04d53ce6b349d9cf";
     private static final int cityId = 1;
     private static final String method = "get_offer_coupons";
     private static final int category_id = 26;
@@ -21,15 +21,25 @@ public class ItemsModel {
 
     private ArrayList<ItemsResponse.KuItem> list;
 
-    public ItemsModel(){
+    public ItemsModel() {
         list = new ArrayList<>(0);
     }
 
-    public ArrayList<ItemsResponse.KuItem> getItem() {
+    public ArrayList<ItemsResponse.KuItem> getItems() {
         return new ArrayList(list);
     }
 
-    public void loadItems(final IListnerLoad listner){
+    public ItemsResponse.KuItem getItem(int position) {
+        if ((list == null) || (list.isEmpty())) {
+            return null;
+        }
+        if (list.size() > position) {
+            return list.get(position);
+        }
+        return null;
+    }
+
+    public void loadItems(final IListnerLoad listner) {
 
         Callback<ItemsResponse> cl = new Callback<ItemsResponse>() {
             @Override
@@ -45,10 +55,17 @@ public class ItemsModel {
 
             }
         };
-        ApiFacade.getInstance().getItems(apiKey, cityId, method, category_id,offset,limit, cl);
+        ApiFacade.getInstance().getItems(apiKey, cityId, method, category_id, offset, limit, cl);
     }
 
-    public interface IListnerLoad{
-       void load(ArrayList<ItemsResponse.KuItem> list);
+    public int size() {
+        if (list != null) {
+            list.size();
+        }
+        return 0;
+    }
+
+    public interface IListnerLoad {
+        void load(ArrayList<ItemsResponse.KuItem> list);
     }
 }
